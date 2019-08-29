@@ -203,7 +203,7 @@ public class ReleaseManagementCI extends Notifier implements Serializable {
         Artifact jenkinsArtifact = null;
         for(final Artifact artifact : releaseDefinition.getArtifacts())
         {
-            if(artifact.getType().equalsIgnoreCase("jenkins") && artifact.getDefinitionReference().getDefinition().getName().equalsIgnoreCase(jobName))
+            if(artifact.getType().equalsIgnoreCase("jenkins") || artifact.getDefinitionReference().getDefinition().getName().equalsIgnoreCase(jobName))
             {
                 jenkinsArtifact = artifact;
                 break;
@@ -237,8 +237,7 @@ public class ReleaseManagementCI extends Notifier implements Serializable {
             JSONObject object = new JSONObject(response);
             listener.getLogger().printf("Release Name: %s%n", object.getString("name"));
             listener.getLogger().printf("Release id: %s%n", object.getString("id"));
-            build.addAction(new ReleaseSummaryAction(jobName, buildId,
-                    object.getJSONObject("_links").getJSONObject("web").getString("href")));
+            build.addAction(new ReleaseSummaryAction(jobName, buildId,object.getJSONObject("releaseDefinition").getString("url")));
         }
     }
 
