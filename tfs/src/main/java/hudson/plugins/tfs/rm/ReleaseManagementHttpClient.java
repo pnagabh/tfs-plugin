@@ -49,13 +49,13 @@ public class ReleaseManagementHttpClient
     
     public String CreateRelease(String project, String body) throws ReleaseManagementException
     {
-        String url = this.accountUrl + project + "/_apis/release/releases?api-version=3.0-preview.2";
+        String url = this.accountUrl + project + "/_apis/release/releases?api-version=2.2-preview.1";
         return this.ExecutePostmethod(url, body);
     }
     
     public ReleaseArtifactVersionsResponse GetVersions(String project, List<Artifact> artifacts) throws ReleaseManagementException
     {
-        String url = this.accountUrl + project + "/_apis/release/artifacts/versions?api-version=3.0-preview.1";
+        String url = this.accountUrl + project + "/_apis/release/artifacts/versions?api-version=2.2-preview.1";
         final String body = new Gson().toJson(artifacts);
         String response = this.ExecutePostmethod(url, body);
         return new Gson().fromJson(response, ReleaseArtifactVersionsResponse.class);
@@ -63,7 +63,7 @@ public class ReleaseManagementHttpClient
 
     public List<Project> GetProjectItems() throws ReleaseManagementException
     {
-        String url = this.accountUrl + "/_apis/projects?api-version=1.0";
+        String url = this.accountUrl + "/_apis/projects?api-version=2.2-preview.1";
         String response = this.ExecuteGetMethod(url);
         try {
             String values = new JSONObject(response).getString("value");
